@@ -1,0 +1,30 @@
+[build]
+  command = "bun run build"
+  publish = ".next"
+
+[build.environment]
+  NETLIFY_NEXT_PLUGIN_SKIP = "true"
+  NODE_ENV = "production"
+  NEXT_PUBLIC_BASE_URL = "/"
+
+# For dynamic site deployment options
+[functions]
+  node_bundler = "esbuild"
+
+# Handle Next.js dynamic routes
+[[redirects]]
+  from = "/*"
+  to = "/.netlify/functions/next"
+  status = 200
+
+[images]
+  remote_images = [
+    "https://source.unsplash.com/.*",
+    "https://images.unsplash.com/.*",
+    "https://ext.same-assets.com/**",
+    "https://ugc.same-assets.com/.*",
+    "https://m.media-amazon.com/**"
+  ]
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
